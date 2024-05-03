@@ -11,17 +11,39 @@
 #include <Arduino.h>
 //used to allow the user to control the robot with their phone
 #include <DabbleESP32.h>
+//used to controll PWM for the MC
+#include <ESP32PWM.h>
+
+
 //define the pins that the inputs of the Motor controller will be solderd to
 #define in1 5
 #define in2 3
 #define in3 4
 #define in4 2
 
+//the object to use PWM for the ESP32
+ESP32PWM pwm1;
+ESP32PWM pwm2;
+ESP32PWM pwm3;
+ESP32PWM pwm4;
+
+//pwm frequency
+int freq = 1000;
+
 void setup() {
     //used for communication with the computer
     Serial.begin(9600);
-    //used for communication over bluetooth
-    Dabble.begin("Basic Drive Base");
+    //allocates all the timers for the ESP32
+    ESP32PWM::allocateTimer(0);
+    ESP32PWM::allocateTimer(1);
+    ESP32PWM::allocateTimer(2);
+    ESP32PWM::allocateTimer(3);
+    
+    //sets up the 4 pwm pins
+    pwm1.attachPin(in1, freq, 10);
+    pwm2.attachPin(in2, freq, 10);
+    pwm3.attachPin(in3, freq, 10);
+    pwm4.attachPin(in4, freq, 10);
 }
 
 void loop() {
@@ -41,8 +63,12 @@ void loop() {
   double Right = GamePad.getYaxisData() - GamePad.getXaxisData();
 
   //writes the PWM values to the pins that will control the motors.
+  /*
   analogWrite(in1, (GamePad.getXaxisData()+7) * 18.2142857143);
-  analogWrite(in4, (GamePad.getYaxisData()+7) * 18.2142857143);
-  analogWrite(in1, (GamePad.getXaxisData()+7) * 0);
-  analogWrite(in4, (GamePad.getYaxisData()+7) * 0);
+  analogWrite(in3, (GamePad.getYaxisData()+7) * 18.2142857143);
+  */
+  pwm1.write(1000);
+  pwm2.write(1000);
+  pwm3.write(0);
+  pwm4.write(0);
 }
