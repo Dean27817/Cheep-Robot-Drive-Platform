@@ -18,3 +18,5 @@ This project will involve soldering to connect all the components (Listed in the
    |GPIO5|in4|
    
    This is just the way it is in code right now, but you can change it if you need
+
+   I need to move pin 2 (in4, Speed4) to a different pin, as aparently this pin is also used with the bluetooth connection
