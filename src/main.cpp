@@ -12,7 +12,9 @@
 //used to allow the user to control the robot with their phone
 #include <DabbleESP32.h>
 //used to controll PWM for the MC
-#include <ESP32PWM.h>
+#include <ESP32Servo.h>
+//Used to make the speed controller easier to work with
+#include "ESC.h"
 
 
 //define the pins that the inputs of the Motor controller will be solderd to
@@ -21,54 +23,78 @@
 #define in3 4
 #define in4 2
 
-//the object to use PWM for the ESP32
-ESP32PWM pwm1;
-ESP32PWM pwm2;
-ESP32PWM pwm3;
-ESP32PWM pwm4;
+//defines the limits of the speeds being sent
+#define MIN_SPEED 0 // speed just slow enough to turn motor off
+#define MAX_SPEED 2000 // speed where my motor drew 3.6 amps at 12v.
 
-//pwm frequency
-int freq = 1000;
+//declaring an ESC object for each "in" pin
+ESC Speed1(in1, 0, 3000, 500);
+ESC Speed2(in2, 0, 3000, 500);
+ESC Speed3(in3, 0, 3000, 500);
+ESC Speed4(in4, 0, 3000, 500);
 
 void setup() {
     //used for communication with the computer
     Serial.begin(9600);
-    //allocates all the timers for the ESP32
-    ESP32PWM::allocateTimer(0);
-    ESP32PWM::allocateTimer(1);
-    ESP32PWM::allocateTimer(2);
-    ESP32PWM::allocateTimer(3);
-    
-    //sets up the 4 pwm pins
-    pwm1.attachPin(in1, freq, 10);
-    pwm2.attachPin(in2, freq, 10);
-    pwm3.attachPin(in3, freq, 10);
-    pwm4.attachPin(in4, freq, 10);
+    //starts the bluetooth connection
+    Dabble.begin("Dean Morgan Drive Base");
+    delay(1000);
+
+    //Allow the pins to send electricity out
+    pinMode(in1, OUTPUT);
+    pinMode(in2, OUTPUT);
+    pinMode(in3, OUTPUT);
+    pinMode(in4, OUTPUT);
+
+    //prepares the pins for PWM
+    Speed1.arm();
+    Speed2.arm();
+    Speed3.arm();
+    Speed4.arm();
 }
 
 void loop() {
   //makes the esp32 reload the input from the phone
   Dabble.processInput();
 
-  //prints the X and Y cordonates from the phone
-  //for some reason its values between -7 and 7
-  //I need PWM values, so i do math for that.
-  Serial.println("x: ");
-  Serial.print((GamePad.getXaxisData() + 7) * 18.2142857143);
-  Serial.print(" y: "); 
-  Serial.print((GamePad.getYaxisData() + 7) * 18.2142857143);
-
   //gets the speed values that the left and right wheels should be traveling
-  double Left = GamePad.getYaxisData() - GamePad.getXaxisData();
-  double Right = GamePad.getYaxisData() - GamePad.getXaxisData();
+  //the multiplication is to take the -7 to 7 value given by dabble and turns it into a usable value to use in the ESC functions
+  double Left = (GamePad.getYaxisData() - GamePad.getXaxisData()) * (MAX_SPEED/7);
+  double Right = (GamePad.getYaxisData() - GamePad.getXaxisData()) * (MAX_SPEED/7);
 
-  //writes the PWM values to the pins that will control the motors.
-  /*
-  analogWrite(in1, (GamePad.getXaxisData()+7) * 18.2142857143);
-  analogWrite(in3, (GamePad.getYaxisData()+7) * 18.2142857143);
-  */
-  pwm1.write(1000);
-  pwm2.write(1000);
-  pwm3.write(0);
-  pwm4.write(0);
+  //right wheel forward
+  if(Right > 0)
+  {
+    digitalWrite(in1, LOW);
+    Speed2.speed(abs(Right));
+  }
+  //right wheel stop
+  else if(Right == 0)
+  {
+    Speed1.stop();
+    Speed2.stop();
+  }
+  //right wheel backwards
+  else 
+  {
+    digitalWrite(in2, LOW);
+    Speed1.speed(abs(Right));
+  }
+
+
+  //left wheel forward
+  if(Left > 0)
+  {
+
+  }
+  //left wheel stop
+  else if(Left == 0)
+  {
+
+  }
+  //left wheel backwards
+  else 
+  {
+
+  }
 }
