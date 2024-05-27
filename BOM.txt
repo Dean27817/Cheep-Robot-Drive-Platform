@@ -1,0 +1,20 @@
+Speed controler
+https://www.amazon.com/KOOBOOK-DRV8833-Module-Bridge-Controller/dp/B07S4FVY9M/ref=sr_1_5?sr=8-5
+
+ESP32
+Amazon: https://www.amazon.com/waveshare-Development-ESP32-S3FH4R2-Dual-Core-Processor/dp/B0CHSBQ1G4/ref=sr_1_9?sr=8-9
+Waveshare (cheeper): https://www.waveshare.com/esp32-s3-zero.htm
+
+Battery
+https://www.amazon.com/VICMILE-Batteries-Compatible-Holystone-Quadcopter/dp/B0C4NTP1YF/ref=sr_1_14_sspa?sr=8-14-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
+
+battery plug
+https://www.amazon.com/OliYin-Connector-Heatproof-Helicopter-Multicopter/dp/B08H7WZJND/ref=sr_1_1?sr=8-1
+
+switch
+https://www.amazon.com/Tnuocke-Vertical-Position-Latching-SS12F15-G5/dp/B099N3HFPG/ref=sxin_16_pa_sp_search_thematic_sspa?cv_ct_cx=micro+switch&pd_rd_i=B099N3HFPG&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sr=1-3-364cf978-ce2a-480a-9bb0-bdb96faa0f61-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9zZWFyY2hfdGhlbWF0aWM&psc=1
+
+motor
+any n10/n20 motor over 2000 rpm at 3 volts (1s) should do, just make sure its not too slow.
+really, you can use whatever you want. on my model, im using 4, 7mm gearmotors to drive the robot.
+the one limit is to make sure that the motor wont pull more that 1.5 amps at 4.7v
