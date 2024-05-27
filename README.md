@@ -4,7 +4,7 @@ this is a project designed to make the world of combat robotics more accessible.
 **use**<br>
 This project will involve soldering to connect all the components (Listed in the BOM coming soon). 
 
-1. You will need two pairs of motors (Two black and white and two red and blue). each pair will be soldered to one output on the H-Bridge to be controlled at the same time. make sure both of the black/blue wires are connected to the same channel on the H-bridge to make sure they spin in the same direction. 
+1. You will need a pairs of motors. each motor will be soldered to one output on the H-Bridge. make sure both of the black/blue wires are connected to the same channel on the H-bridge to make sure they spin in the same direction. 
 2. The red power lead should then be soldered to the switch, and the other end of the switch soldered to the VCC pin on the H-bridge, and the black goes directly to the GND pin.
 3. Solder the pins according to the table below
    
