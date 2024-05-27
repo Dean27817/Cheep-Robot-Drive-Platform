@@ -12,11 +12,12 @@ This project will involve soldering to connect all the components (Listed in the
    |-----|--------|
    |5V|VCC|
    |GND|GND|
-   |GPIO2|in1|
+   |GPIO5|in1|
    |GPIO3|in3|
    |GPIO4|in2|
-   |GPIO5|in4|
+   |GPIO10|in4|
    
    This is just the way it is in code right now, but you can change it if you need
 
-   I need to move pin 2 (in4, Speed4) to a different pin, as aparently this pin is also used with the bluetooth connection
+   The code currently works to make the motors move, but the math to the controller is wrong, I just want to have a working backup.
+4. Upload the code to the ESP32. You will need to install the ESP32Servo Library (Used for the ESP32PWM) and the DabbleESP32 library (used for bluetooth). Also make sure to change the name in the Dabble.begin call in the setup function as this will be the name that will show up in the bluetooth connection. When you go to upload you will need to make sure that you have installed the ESP32 add on if you are using the arduino IDE (toutorial here: https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
