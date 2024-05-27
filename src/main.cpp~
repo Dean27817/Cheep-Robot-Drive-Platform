@@ -1,0 +1,49 @@
+//cheep robot base
+//created by dean morgan
+//this code is designed to be used on a esp32-S3-Zero from waveshare
+//it uses a basic 2 chanel H-Bridge motor controller, each chanel driving 2 motors with custom printed gearboxes
+
+//defonitions to use the gamepad modual on dabble
+#define CUSTOM_SETTINGS
+#define INCLUDE_GAMEPAD_MODULE
+
+//basic arduino library
+#include <Arduino.h>
+//used to allow the user to control the robot with their phone
+#include <DabbleESP32.h>
+//used for PWM
+#include "soc/mcpwm_reg.h"
+#include "soc/mcpwm_struct.h"
+#include "driver/mcpwm.h"
+
+//define the pins that the inputs of the Motor controller will be solderd to
+#define in1 5
+#define in2 3
+#define in3 4
+#define in4 10
+
+void setup() {
+  //used for communication with the computer
+  Serial.begin(9600);
+  //starts the bluetooth connection
+  Dabble.begin("Dean Morgan Drive Base");
+  delay(1000);
+  //initializing the PWM for the speed controller
+  mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, in1);  
+  mcpwm_set_signal_high(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A);
+  delay(3000);
+  mcpwm_set_signal_low(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A);
+}
+
+void loop() {
+  //makes the esp32 reload the input from the phone
+  Dabble.processInput();
+  if(GamePad.getYaxisData() > 0.2)
+  {
+    mcpwm_set_signal_high(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A);
+  }
+  else
+  {
+    mcpwm_set_signal_low(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A);
+  }
+}
