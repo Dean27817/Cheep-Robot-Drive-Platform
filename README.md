@@ -22,8 +22,12 @@ This project will involve soldering to connect all the components (Listed in the
    The code currently works to make the motors move, but the math to the controller is wrong, I just want to have a working backup.
 4. Upload the code to the ESP32. You will need to install the ESP32Servo Library (Used for the ESP32PWM) and the DabbleESP32 library (used for bluetooth). Also make sure to change the name in the Dabble.begin call in the setup function as this will be the name that will show up in the bluetooth connection. When you go to upload you will need to make sure that you have installed the ESP32 add on if you are using the arduino IDE (toutorial here: https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
 
+# Chassis<br>
+The chassis for this robot is entirely 3D printed. It is designed as a simple wedge so it is just the wheels and a basic body. it is not fully finished yet, so I wouldent recomend printing at its current state. Its nose flips upward when it accelerates and not everything fits snugly.
+
 # TODO<br>
 Finish cad files for a basic wedge<br>
 Put everythibng togeather and make sure it is all working<br>
 Test failsafes<br>
 Finalize electronics<br>
+Write assembly guide<br>
