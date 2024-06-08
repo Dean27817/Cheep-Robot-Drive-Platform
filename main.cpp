@@ -96,6 +96,12 @@ void setup() {
   speedControl4.attachPin(in4, freq, 10);
 
   //plays a startup on the drive motors
+  drive(-1, -1);
+  delay(50);
+  drive(1, 1);
+  delay(50);
+  drive(0, 0);
+  Dabble.waitForAppConnection();
   drive(1, -1);
   delay(50);
   drive(-1, 1);
@@ -105,21 +111,22 @@ void setup() {
 
 
 void loop() {
-  //makes the esp32 reload the input from the phone
+  //Makes the ESP32 reload the input from the phone
   Dabble.processInput();
 
-  //if the device is connected it will allow the robot to move
-  if(Dabble.isAppConnected())
-  {
-    float forward = GamePad.getYaxisData()/7;
-    float rotate = GamePad.getXaxisData()/14;
-
-    drive(forward + rotate, forward + rotate);
-  }
-  //if the phone is not connected it will stop the robot. this is used for failsafes
-  else
-  {
+  //Check if the device is connected
+  if (Dabble.isAppConnected()) {
+    // If connected, allow the robot to move
+    float forward = -1 * (GamePad.getYaxisData() / 7);
+    float rotate = 1 * (GamePad.getXaxisData() / 14);
+    drive(rotate + forward, rotate - forward);
+  } else {
+    //If not connected, stop the robot
     drive(0, 0);
+    //add a message to indicate disconnection
+    Serial.println("App disconnected. Stopping the robot.");
   }
   
+  //Continue to wait for app connection in the loop
+  Dabble.waitForAppConnection();
 }
