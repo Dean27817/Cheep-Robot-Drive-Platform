@@ -23,10 +23,9 @@ This project will involve soldering to connect all the components (Listed in the
 4. Upload the code to the ESP32. You will need to install the ESP32Servo Library (Used for the ESP32PWM) and the DabbleESP32 library (used for bluetooth). Also make sure to change the name in the Dabble.begin call in the setup function as this will be the name that will show up in the bluetooth connection. When you go to upload you will need to make sure that you have installed the ESP32 add on if you are using the arduino IDE (toutorial here: https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
 
 # Chassis<br>
-The chassis for this robot is entirely 3D printed. It is designed as a simple wedge so it is just the wheels and a basic body. I am pretty happy with how the body is (although I havent tested the switch hole yet). I havent yet tested the TPU wheels,but should do that soon. The battery will go in front of the motors and the rest of the electronics should go behind (pics coming soon). the motors themselves fit into the slots by the holes in the sides and are held in with zip-ties (though also using hot glue is recomended). the wheels have slots for a M2 nut to fit into and have a bolt go through to hold them in place.
+The chassis for this robot is entirely 3D printed. It is designed as a simple wedge so it is just the wheels and a basic body. I am pretty happy with how the body is (although I havent tested the switch hole yet). the motors fit into the slots by the holes in the sides and are held in with zip-ties (though also using hot glue is recomended). the wheels have slots for a M2 nut to fit into and have a bolt go through to hold them in place. All of the electronics go in front of the motors (pics coming soon). The TPU wheels work, but have very little traction with the floor.
 
 # TODO<br>
-Finish cad files for a basic wedge<br>
 Put everythibng togeather and make sure it is all working<br>
 Test failsafes<br>
 Finalize electronics<br>
