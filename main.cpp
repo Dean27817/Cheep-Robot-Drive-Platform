@@ -21,8 +21,8 @@
 //define the pins that the inputs of the Motor controller will be solderd to
 #define in1 5
 #define in2 3
-#define in3 8
-#define in4 10
+#define in3 10
+#define in4 8
 
 //creates the objects from the PWM library
 ESP32PWM speedControl1;
@@ -33,6 +33,9 @@ ESP32PWM speedControl4;
 //the maximum frequency of each pin
 int freq = 1000;
 
+float forward;
+float rotate;
+
 //used to make the code for the robot look cleaner
 //takes the speed the left and right motors should go (from -1 to 1) and works with the PWM to make them move appropriatly
 void drive(float left, float right)
@@ -40,7 +43,7 @@ void drive(float left, float right)
   //reverses the left or right motor
   //makes it so that if one is solderd backwards you dont have to worry about it because you can just reverse one of the motors
   left *= -1; 
-  right *= 1;
+  right *= -1;
   //controls the left motors
   //each motor will take a value between 0 and 1
   if(left > 0)
@@ -96,16 +99,14 @@ void setup() {
   speedControl4.attachPin(in4, freq, 10);
 
   //plays a startup on the drive motors
-  drive(-1, -1);
-  delay(50);
-  drive(1, 1);
+  drive(1, -1);
   delay(50);
   drive(0, 0);
   Dabble.waitForAppConnection();
   drive(1, -1);
   delay(50);
   drive(-1, 1);
-  delay(50);
+  delay(100);
   drive(0, 0);
 }
 
@@ -117,9 +118,9 @@ void loop() {
   //Check if the device is connected
   if (Dabble.isAppConnected()) {
     // If connected, allow the robot to move
-    float forward = -1 * (GamePad.getYaxisData() / 7);
-    float rotate = 1 * (GamePad.getXaxisData() / 14);
-    drive(rotate + forward, rotate - forward);
+      forward = -1 * ((0.002915451895044) * (GamePad.getYaxisData() * GamePad.getYaxisData() * GamePad.getYaxisData()));
+      rotate = 1 * (((0.002915451895044) * (GamePad.getXaxisData() * GamePad.getXaxisData() * GamePad.getXaxisData()))/2);    
+    drive(rotate - forward, rotate + forward);
   } else {
     //If not connected, stop the robot
     drive(0, 0);
