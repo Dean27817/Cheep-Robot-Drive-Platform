@@ -1,5 +1,9 @@
+Just a warning, I baught all of this on amazon, I cant guarentee the ligitimusy or quality of any of the other sources. If any of these are scams, please let me know so I can remove them from this list and find an alternitive
+
+
 Speed controler
-https://www.amazon.com/KOOBOOK-DRV8833-Module-Bridge-Controller/dp/B07S4FVY9M/ref=sr_1_5?sr=8-5
+Amazon: https://www.amazon.com/KOOBOOK-DRV8833-Module-Bridge-Controller/dp/B07S4FVY9M/ref=sr_1_5?sr=8-5
+Aliexpress: https://www.aliexpress.us/item/3256806258295019.html?spm=a2g0o.productlist.main.1.6ea250277MG5fd&algo_pvid=9f83e846-ccdd-4be6-9d1d-8315025352c0&algo_exp_id=9f83e846-ccdd-4be6-9d1d-8315025352c0-0&pdp_npi=4%40dis%21USD%2115.14%210.99%21%21%21109.54%217.12%21%402101fb1217187735695784601e7c46%2112000037189881497%21sea%21US%210%21AB&curPageLogUid=1ArHDB7qppVk&utparam-url=scene%3Asearch%7Cquery_from%3A
 
 ESP32
 Amazon: https://www.amazon.com/waveshare-Development-ESP32-S3FH4R2-Dual-Core-Processor/dp/B0CHSBQ1G4/ref=sr_1_9?sr=8-9
@@ -9,12 +13,18 @@ Battery
 https://www.amazon.com/VICMILE-Batteries-Compatible-Holystone-Quadcopter/dp/B0C4NTP1YF/ref=sr_1_14_sspa?sr=8-14-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
 
 battery plug
-https://www.amazon.com/OliYin-Connector-Heatproof-Helicopter-Multicopter/dp/B08H7WZJND/ref=sr_1_1?sr=8-1
+Amazon: https://www.amazon.com/OliYin-Connector-Heatproof-Helicopter-Multicopter/dp/B08H7WZJND/ref=sr_1_1?sr=8-1
+Aliexpress: https://www.aliexpress.us/item/2251832841239323.html?spm=a2g0o.productlist.main.1.19693140y7Cic6&algo_pvid=fbb12e82-e7a1-4d84-9cab-15aa8ab91f1f&algo_exp_id=fbb12e82-e7a1-4d84-9cab-15aa8ab91f1f-0&pdp_npi=4%40dis%21USD%211.65%211.65%21%21%211.65%211.65%21%402101fb1117187734229123751e7adc%2167245149252%21sea%21US%210%21AB&curPageLogUid=qdDs4sBQBXW4&utparam-url=scene%3Asearch%7Cquery_from%3A
 
 switch
-https://www.amazon.com/Tnuocke-Vertical-Position-Latching-SS12F15-G5/dp/B099N3HFPG/ref=sxin_16_pa_sp_search_thematic_sspa?cv_ct_cx=micro+switch&pd_rd_i=B099N3HFPG&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sr=1-3-364cf978-ce2a-480a-9bb0-bdb96faa0f61-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9zZWFyY2hfdGhlbWF0aWM&psc=1
+Amazon: https://www.amazon.com/Tnuocke-Vertical-Position-Latching-SS12F15-G5/dp/B099N3HFPG/ref=sxin_16_pa_sp_search_thematic_sspa?cv_ct_cx=micro+switch&pd_rd_i=B099N3HFPG&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sr=1-3-364cf978-ce2a-480a-9bb0-bdb96faa0f61-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9zZWFyY2hfdGhlbWF0aWM&psc=1
+Aliexpress: https://www.aliexpress.us/item/2251832626374457.html?spm=a2g0o.productlist.main.11.452e35adhEVBrB&algo_pvid=ab785c06-8561-42bc-a588-2af899d9e9bd&algo_exp_id=ab785c06-8561-42bc-a588-2af899d9e9bd-5&pdp_npi=4%40dis%21USD%211.03%210.98%21%21%211.03%210.98%21%402103011617187737458661156ea899%2164701560453%21sea%21US%210%21AB&curPageLogUid=8xG7LeVx4b0l&utparam-url=scene%3Asearch%7Cquery_from%3A
 
 motor
-any n10/n20 motor over 2000 rpm at 3 volts (1s) should do, just make sure its not too slow.
+any n10/n20 motor over 500 rpm at 3 volts (1s) should do, just make sure its not too slow.
 really, you can use whatever you want. on my model, im using 4, 7mm gearmotors to drive the robot.
 the one limit is to make sure that the motor wont pull more that 1.5 amps at 4.7v
+
+Recomended motors:
+Amazon: https://www.amazon.com/dp/B0CJ7163G2?ref_=cm_sw_r_apan_dp_Z8YTW53NWPTV1Y20NZB3&starsLeft=1&skipTwisterOG=2
+Aliexpress: https://www.aliexpress.us/item/3256806131900144.html?spm=a2g0o.productlist.main.1.442b1481xZqzs6&algo_pvid=87b66987-68a7-4922-99d4-8521c5e95dfd&algo_exp_id=87b66987-68a7-4922-99d4-8521c5e95dfd-0&pdp_npi=4%40dis%21USD%2119.67%216.16%21%21%2119.67%216.16%21%402103247417187738363215557e7266%2112000036740936394%21sea%21US%210%21AB&curPageLogUid=P98SaEQL2QNH&utparam-url=scene%3Asearch%7Cquery_from%3A
