@@ -8,14 +8,8 @@
   #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting. 
 #endif 
 
-//defonitions to use the gamepad moduel on dabble
-#define CUSTOM_SETTINGS
-#define INCLUDE_GAMEPAD_MODULE
-
-//basic arduino library
-#include <Arduino.h>
-//used to allow the user to control the robot with their phone
-#include <DabbleESP32.h>
+//used to communicate with the PS4 controller
+#include <PS4Controller.h>
 //used for PWM
 #include <ESP32PWM.h>
 //define the pins that the inputs of the Motor controller will be solderd to
@@ -33,6 +27,7 @@ ESP32PWM speedControl4;
 //the maximum frequency of each pin
 int freq = 1000;
 
+//used to allow the variables that control the speed of each motor to be global
 float forward;
 float rotate;
 
@@ -79,55 +74,73 @@ void drive(float left, float right)
   }
 }
 
-void setup() {
+void notify()
+{
+  int rightMotorSpeed, leftMotorSpeed;
+  rightMotorSpeed = map( PS4.RStickY(), -127, 127, -255, 255); //Left stick  - y axis - forward/backward left motor movement
+  leftMotorSpeed = map( PS4.LStickY(), -127, 127, -255, 255);  //Right stick - y axis - forward/backward right motor movement
+
+  rightMotorSpeed = constrain(rightMotorSpeed, -255, 255);
+  leftMotorSpeed = constrain(leftMotorSpeed, -255, 255);
+
+  drive(rightMotorSpeed, leftMotorSpeed);
+}
+
+void onConnect()
+{
+  //makes the robot move when it is connected to the controler
+  drive(1, -1);
+  delay(50);
+  drive(-1, 1);
+  delay(100);
+  drive(0, 0);
+  Serial.println("Connected!.");
+}
+
+void onDisConnect()
+{
+  drive(0, 0);
+  Serial.println("Disconnected!.");    
+}
+
+void setUpPinModes()
+{
   // Allow allocation of all timers
 	ESP32PWM::allocateTimer(0);
 	ESP32PWM::allocateTimer(1);
 	ESP32PWM::allocateTimer(2);
 	ESP32PWM::allocateTimer(3);
 
-  //used for communication with the computer
-  Serial.begin(9600);
-
-  //starts the bluetooth connection
-  Dabble.begin("Dean Morgan Drive Base");
-
   //tells the code wich pins are being used for each clock
   speedControl1.attachPin(in1, freq, 10);
   speedControl2.attachPin(in2, freq, 10);
   speedControl3.attachPin(in3, freq, 10);
   speedControl4.attachPin(in4, freq, 10);
+}
+
+
+void setup()
+{
+  //used for communication with the computer
+  Serial.begin(9600);
+
+  //sets up each pin for its PWM
+  setUpPinModes();
+  
+  PS4.begin("a0:5a:5a:a0:11:4c");
 
   //plays a startup on the drive motors
   drive(1, -1);
   delay(50);
   drive(0, 0);
-  Dabble.waitForAppConnection();
-  drive(1, -1);
-  delay(50);
-  drive(-1, 1);
-  delay(100);
-  drive(0, 0);
+
+  PS4.attach(notify);
+  PS4.attachOnConnect(onConnect);
+  PS4.attachOnDisconnect(onDisConnect);
+  PS4.begin();
+  Serial.println("Ready.");
 }
 
-
-void loop() {
-  //Makes the ESP32 reload the input from the phone
-  Dabble.processInput();
-
-  //Check if the device is connected
-  if (Dabble.isAppConnected()) {
-    // If connected, allow the robot to move
-      forward = -1 * ((0.002915451895044) * (GamePad.getYaxisData() * GamePad.getYaxisData() * GamePad.getYaxisData()));
-      rotate = 1 * (((0.002915451895044) * (GamePad.getXaxisData() * GamePad.getXaxisData() * GamePad.getXaxisData()))/2);    
-    drive(rotate - forward, rotate + forward);
-  } else {
-    //If not connected, stop the robot
-    drive(0, 0);
-    //add a message to indicate disconnection
-    Serial.println("App disconnected. Stopping the robot.");
-  }
-  
-  //Continue to wait for app connection in the loop
-  Dabble.waitForAppConnection();
+void loop()
+{
 }
