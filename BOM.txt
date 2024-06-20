@@ -10,7 +10,8 @@ Amazon: https://www.amazon.com/waveshare-Development-ESP32-S3FH4R2-Dual-Core-Pro
 Waveshare (cheeper): https://www.waveshare.com/esp32-s3-zero.htm
 
 Battery
-https://www.amazon.com/VICMILE-Batteries-Compatible-Holystone-Quadcopter/dp/B0C4NTP1YF/ref=sr_1_14_sspa?sr=8-14-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
+Amazon: https://www.amazon.com/VICMILE-Batteries-Compatible-Holystone-Quadcopter/dp/B0C4NTP1YF/ref=sr_1_14_sspa?sr=8-14-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1
+Aliexpress: https://www.aliexpress.us/item/2251832708099380.html?spm=a2g0o.productlist.main.15.7e747dabuPzmPe&algo_pvid=09e9f6f8-9dff-4b39-9ac3-d071a8bc17f2&aem_p4p_detail=202406191746519023556668301700007094836&algo_exp_id=09e9f6f8-9dff-4b39-9ac3-d071a8bc17f2-7&pdp_npi=4%40dis%21USD%2110.17%216.10%21%21%2173.62%2144.17%21%402101e5f117188444114628916e4210%2165740454585%21sea%21US%210%21AB&curPageLogUid=iwumkL739aX0&utparam-url=scene%3Asearch%7Cquery_from%3A&search_p4p_id=202406191746519023556668301700007094836_2
 
 battery plug
 Amazon: https://www.amazon.com/OliYin-Connector-Heatproof-Helicopter-Multicopter/dp/B08H7WZJND/ref=sr_1_1?sr=8-1
