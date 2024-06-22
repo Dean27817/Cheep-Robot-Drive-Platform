@@ -1,14 +1,20 @@
-//cheep robot base
-//created by dean morgan
-//this code is designed to be used on a esp32-S3-Zero from waveshare
-//it uses a basic 2 chanel H-Bridge motor controller, each chanel driving 2 motors with custom printed gearboxes
+/*
+  Cheep robot base
+    > created by Dean Morgan
+  
+  This base code was designed with the following hardware in mind:
+    > Waveshare esp32-S3-zero
+    > 2 channel H-Bridge motor controller
+    > Maximum of 2 motors
+      > one left motor and one right motor
+*/
 
 //used to see if the program is running on an esp32 board
 #if !defined( ESP32 ) 
   #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting. 
 #endif 
 
-//defonitions to use the gamepad moduel on dabble
+//definitions to use the game-pad module on dabble
 #define CUSTOM_SETTINGS
 #define INCLUDE_GAMEPAD_MODULE
 
@@ -18,11 +24,11 @@
 #include <DabbleESP32.h>
 //used for PWM
 #include <ESP32PWM.h>
-//define the pins that the inputs of the Motor controller will be solderd to
-#define in1 5
-#define in2 3
-#define in3 10
-#define in4 8
+//define the pins that the inputs of the Motor controller will be soldered to
+#define in1 6
+#define in2 5
+#define in3 8
+#define in4 7
 
 //creates the objects from the PWM library
 ESP32PWM speedControl1;
@@ -37,11 +43,11 @@ float forward;
 float rotate;
 
 //used to make the code for the robot look cleaner
-//takes the speed the left and right motors should go (from -1 to 1) and works with the PWM to make them move appropriatly
+//takes the speed the left and right motors should go (from -1 to 1) and works with the PWM to make them move appropriately
 void drive(float left, float right)
 {
   //reverses the left or right motor
-  //makes it so that if one is solderd backwards you dont have to worry about it because you can just reverse one of the motors
+  //makes it so that if one is soldered backwards you dont have to worry about it because you can just reverse one of the motors
   left *= -1; 
   right *= -1;
   //controls the left motors
@@ -90,9 +96,9 @@ void setup() {
   Serial.begin(9600);
 
   //starts the bluetooth connection
-  Dabble.begin("Dean Morgan Drive Base");
+  Dabble.begin("Cheep Chirp Speed");
 
-  //tells the code wich pins are being used for each clock
+  //tells the code which pins are being used for each clock
   speedControl1.attachPin(in1, freq, 10);
   speedControl2.attachPin(in2, freq, 10);
   speedControl3.attachPin(in3, freq, 10);
@@ -110,16 +116,15 @@ void setup() {
   drive(0, 0);
 }
 
-
 void loop() {
   //Makes the ESP32 reload the input from the phone
   Dabble.processInput();
 
   //Check if the device is connected
-  if (Dabble.isAppConnected()) {
+  if (!esp32ble.available()) {
     // If connected, allow the robot to move
       forward = -1 * ((0.002915451895044) * (GamePad.getYaxisData() * GamePad.getYaxisData() * GamePad.getYaxisData()));
-      rotate = 1 * (((0.002915451895044) * (GamePad.getXaxisData() * GamePad.getXaxisData() * GamePad.getXaxisData()))/2);    
+      rotate = -1 * (GamePad.getXaxisData()/10);  
     drive(rotate - forward, rotate + forward);
   } else {
     //If not connected, stop the robot
