@@ -1,43 +1,22 @@
-/*
-  Cheep robot base
-    > created by Dean Morgan
-  
-  This base code was designed with the following hardware in mind:
-    > Waveshare esp32-S3-zero
-    > 2 channel H-Bridge motor controller
-    > Maximum of 2 motors
-      > one left motor and one right motor
-*/
-
-//used to see if the program is running on an esp32 board
-#if !defined( ESP32 ) 
-  #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting. 
-#endif 
-
-//definitions to use the game-pad module on dabble
-#define CUSTOM_SETTINGS
-#define INCLUDE_GAMEPAD_MODULE
-
-//basic arduino library
-#include <Arduino.h>
-//used to allow the user to control the robot with their phone
-#include <DabbleESP32.h>
-//used for PWM
-#include <ESP32PWM.h>
+#include "Arduino.h"
+#include "ESP32Servo.h"
+#include <XboxSeriesXControllerESP32_asukiaaa.hpp>
 //define the pins that the inputs of the Motor controller will be soldered to
-#define in1 6
-#define in2 5
-#define in3 8
-#define in4 7
+#define in1 10
+#define in2 8
+#define in3 3
+#define in4 5
 
 //creates the objects from the PWM library
 ESP32PWM speedControl1;
 ESP32PWM speedControl2;
 ESP32PWM speedControl3;
 ESP32PWM speedControl4;
+XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 
 //the maximum frequency of each pin
 int freq = 1000;
+int controllerMode = 0;
 
 float forward;
 float rotate;
@@ -96,8 +75,7 @@ void setup() {
   Serial.begin(9600);
 
   //starts the bluetooth connection
-  Dabble.begin("Cheep Chirp Speed");
-
+  xboxController.begin();
   //tells the code which pins are being used for each clock
   speedControl1.attachPin(in1, freq, 10);
   speedControl2.attachPin(in2, freq, 10);
@@ -108,7 +86,6 @@ void setup() {
   drive(1, -1);
   delay(50);
   drive(0, 0);
-  Dabble.waitForAppConnection();
   drive(1, -1);
   delay(50);
   drive(-1, 1);
@@ -116,23 +93,39 @@ void setup() {
   drive(0, 0);
 }
 
-void loop() {
-  //Makes the ESP32 reload the input from the phone
-  Dabble.processInput();
+void loop()
+{
+   //refreshes the input from the xbox
+  xboxController.onLoop();
 
-  //Check if the device is connected
-  if (!esp32ble.available()) {
-    // If connected, allow the robot to move
-      forward = -1 * ((0.002915451895044) * (GamePad.getYaxisData() * GamePad.getYaxisData() * GamePad.getYaxisData()));
-      rotate = -1 * (GamePad.getXaxisData()/10);  
-    drive(rotate - forward, rotate + forward);
-  } else {
-    //If not connected, stop the robot
-    drive(0, 0);
-    //add a message to indicate disconnection
-    Serial.println("App disconnected. Stopping the robot.");
+  //checks if th3e controler is connected
+  if(xboxController.isConnected())
+  {
+    //checks if the controler has been fully set up
+    if(!xboxController.isWaitingForFirstNotification())
+    {
+        float left = ((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2;
+        float right = ((xboxController.xboxNotif.joyLVert - 32767.5) / (65535))*2;
+
+        Serial.println(xboxController.xboxNotif.joyRVert);
+
+        drive(left, right);
+      }
+
+      switch(controllerMode)
+      {
+
+        case 1:
+        break;
+      };
+
+      if(xboxController.xboxNotif.btnA)
+      {
+
+      }
   }
-  
-  //Continue to wait for app connection in the loop
-  Dabble.waitForAppConnection();
 }
+
+
+
+
