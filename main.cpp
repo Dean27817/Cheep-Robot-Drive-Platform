@@ -29,33 +29,37 @@ void drive(float left, float right)
   //makes it so that if one is soldered backwards you dont have to worry about it because you can just reverse one of the motors
   left *= -1; 
   right *= -1;
+
+  float buffer = 0.1;
   //controls the left motors
   //each motor will take a value between 0 and 1
-  if(left > 0)
+  if(left > buffer || left < -buffer || right > buffer || right < -buffer)
   {
-    speedControl1.writeScaled(abs(left));
-    speedControl2.writeScaled(0);
+    if(left > 0)
+    {
+      speedControl1.writeScaled(abs(left));
+      speedControl2.writeScaled(0);
+    }
+    else
+    {
+      speedControl1.writeScaled(0);
+      speedControl2.writeScaled(abs(left));
+    }
+
+    //controls the right motors
+    //each motor will take a value between 0 and 1
+    if(right > 0)
+    {
+      speedControl3.writeScaled(abs(right));
+      speedControl4.writeScaled(0);
+    }
+    else
+    {
+      speedControl3.writeScaled(0);
+      speedControl4.writeScaled(abs(right));
+    }
   }
   else
-  {
-    speedControl1.writeScaled(0);
-    speedControl2.writeScaled(abs(left));
-  }
-
-  //controls the right motors
-  //each motor will take a value between 0 and 1
-  if(right > 0)
-  {
-    speedControl3.writeScaled(abs(right));
-    speedControl4.writeScaled(0);
-  }
-  else
-  {
-    speedControl3.writeScaled(0);
-    speedControl4.writeScaled(abs(right));
-  }
-
-  if(right == 0 && left == 0)
   {
     speedControl1.writeScaled(0);
     speedControl2.writeScaled(0);
@@ -109,23 +113,40 @@ void loop()
 
         Serial.println(xboxController.xboxNotif.joyRVert);
 
-        drive(left, right);
+        switch(controllerMode)
+        {
+          case 0:
+          drive(0, 0);
+          break;
+          case 1:
+          drive(((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2, ((xboxController.xboxNotif.joyLVert - 32767.5) / (65535))*2);
+          break;
+          case 2:
+          drive((((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2) + (((xboxController.xboxNotif.joyRHori - 32767.5) / (65535))*2), (((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2) - (((xboxController.xboxNotif.joyRHori - 32767.5) / (65535))*2));
+          break;
+          case 3:
+          drive((((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2) + (((xboxController.xboxNotif.joyLHori - 32767.5) / (65535))*2), (((xboxController.xboxNotif.joyRVert - 32767.5) / (65535))*2) - (((xboxController.xboxNotif.joyLHori - 32767.5) / (65535))*2));
+          break;
+        };
       }
 
-      switch(controllerMode)
-      {
-
-        case 1:
-        break;
-      };
+      
 
       if(xboxController.xboxNotif.btnA)
       {
-
+        controllerMode = 1;
+      }
+      else if (xboxController.xboxNotif.btnB)
+      {
+        controllerMode = 2;
+      }
+      else if (xboxController.xboxNotif.btnX)
+      {
+        controllerMode = 0;
+      }
+      else if (xboxController.xboxNotif.btnY)
+      {
+        controllerMode = 3;
       }
   }
 }
-
-
-
-
