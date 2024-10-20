@@ -81,7 +81,7 @@ void loop() {
     Speed1.speed(abs(Right));
   }
 
-/*
+
   //left wheel forward
   if(Left > 0.2)
   {
@@ -100,5 +100,5 @@ void loop() {
     digitalWrite(in4, LOW);
     Speed3.speed(abs(Left));
   }
-  */
+  
 }
